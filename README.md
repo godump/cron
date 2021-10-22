@@ -2,7 +2,7 @@
 
 Execute scheduled jobs.
 
-Cron generates a signal every second, the 0th second of every minute, the 0th second of every hour, or the 0th second of every day. We can use it with the library [gracefulexit](https://github.com/godump/gracefulexit) to form a basic scheduler:
+Cron generates a signal every second, the 0th second of every minute, the 0th second of every hour, or the 0th second of every day. We recommend using it with [gracefulexit](https://github.com/godump/gracefulexit): 
 
 ```go
 package main

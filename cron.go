@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Loop generate a signal at all time.
 func Loop() <-chan struct{} {
 	r := make(chan struct{})
 	go func() {
@@ -14,6 +15,7 @@ func Loop() <-chan struct{} {
 	return r
 }
 
+// Second generate a signal every second.
 func Second() <-chan struct{} {
 	r := make(chan struct{})
 	go func() {
@@ -24,6 +26,7 @@ func Second() <-chan struct{} {
 	return r
 }
 
+// Minute generate a signal every minute.
 func Minute() <-chan struct{} {
 	r := make(chan struct{})
 	go func() {
@@ -37,6 +40,7 @@ func Minute() <-chan struct{} {
 	return r
 }
 
+// Hour generate a signal every hour.
 func Hour() <-chan struct{} {
 	r := make(chan struct{})
 	go func() {
@@ -51,6 +55,7 @@ func Hour() <-chan struct{} {
 	return r
 }
 
+// Dayz generate a signal every dayz.
 func Dayz() <-chan struct{} {
 	r := make(chan struct{})
 	go func() {
