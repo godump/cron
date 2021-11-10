@@ -1,8 +1,6 @@
 # Cron
 
-Execute scheduled jobs.
-
-Cron generates a signal every second, the 0th second of every minute, the 0th second of every hour, or the 0th second of every day. We recommend using it with [gracefulexit](https://github.com/godump/gracefulexit): 
+Package cron provides functionality for generate signals at intervals timed in January 1, 1970 UTC. According to most cases, cron can work with [gracefulexit](https://github.com/godump/gracefulexit).
 
 ```go
 package main

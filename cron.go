@@ -1,38 +1,17 @@
+// Package cron provides functionality for generate signals at intervals timed in January 1, 1970 UTC.
 package cron
 
 import (
 	"time"
 )
 
-// Loop generate a signal at all time.
-func Loop() <-chan struct{} {
+// Loop generate a signal every d duration timed in January 1, 1970 UTC.
+func Loop(d time.Duration) <-chan struct{} {
 	r := make(chan struct{})
 	go func() {
 		for {
-			r <- struct{}{}
-		}
-	}()
-	return r
-}
-
-// Second generate a signal every second.
-func Second() <-chan struct{} {
-	r := make(chan struct{})
-	go func() {
-		for range time.NewTicker(time.Second).C {
-			r <- struct{}{}
-		}
-	}()
-	return r
-}
-
-// Minute generate a signal every minute.
-func Minute() <-chan struct{} {
-	r := make(chan struct{})
-	go func() {
-		for {
-			n := time.Now()
-			s := time.Duration(60-n.Second()) * time.Second
+			n := time.Now().UnixNano()
+			s := time.Duration(int64(d)-n%int64(d)) * time.Nanosecond
 			time.Sleep(s)
 			r <- struct{}{}
 		}
@@ -40,33 +19,22 @@ func Minute() <-chan struct{} {
 	return r
 }
 
-// Hour generate a signal every hour.
-func Hour() <-chan struct{} {
-	r := make(chan struct{})
-	go func() {
-		for {
-			n := time.Now()
-			s := time.Duration(60-n.Second()) * time.Second
-			m := time.Duration(59-n.Minute()) * time.Minute
-			time.Sleep(s + m)
-			r <- struct{}{}
-		}
-	}()
-	return r
+// Second generate a signal every second timed in January 1, 1970 UTC.
+func Second() <-chan struct{} {
+	return Loop(time.Second)
 }
 
-// Dayz generate a signal every dayz.
+// Minute generate a signal every minute timed in January 1, 1970 UTC.
+func Minute() <-chan struct{} {
+	return Loop(time.Minute)
+}
+
+// Hour generate a signal every hour timed in January 1, 1970 UTC.
+func Hour() <-chan struct{} {
+	return Loop(time.Hour)
+}
+
+// Dayz generate a signal every dayz timed in January 1, 1970 UTC.
 func Dayz() <-chan struct{} {
-	r := make(chan struct{})
-	go func() {
-		for {
-			n := time.Now()
-			s := time.Duration(60-n.Second()) * time.Second
-			m := time.Duration(59-n.Minute()) * time.Minute
-			h := time.Duration(23-n.Hour()) * time.Hour
-			time.Sleep(s + m + h)
-			r <- struct{}{}
-		}
-	}()
-	return r
+	return Loop(time.Hour * 24)
 }
