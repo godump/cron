@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	chanSpin := cron.Minute()
+	chanSpin := cron.Cron(time.Minute)
 	chanExit := gracefulexit.Chan()
 	done := 0
 	log.Println("main: loop")
