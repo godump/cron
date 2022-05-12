@@ -10,8 +10,8 @@ func CronWait(d time.Duration, s time.Duration) <-chan struct{} {
 	r := make(chan struct{})
 	go func() {
 		for {
-			n := time.Now().UnixNano()
-			m := s + time.Duration(int64(d)-n%int64(d))*time.Nanosecond
+			n := time.Now().UnixNano() - s.Nanoseconds()
+			m := time.Duration(int64(d)-n%int64(d)) * time.Nanosecond
 			time.Sleep(m)
 			r <- struct{}{}
 		}
